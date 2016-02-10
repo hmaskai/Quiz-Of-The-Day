@@ -20,6 +20,13 @@ Here's a walkthrough of implemented user stories:
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
+### Team Members
+- [ ] Anuran Duttaroy
+- [ ] Harshil Maskai
+- [ ] Nilam Bari
+- [ ] Saurabh Kardile
+- [ ] Sudesh Shinde
+
 ### Notes
 
 Suggestions and notes go here.
