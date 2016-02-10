@@ -21,11 +21,11 @@ Here's a walkthrough of implemented user stories:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ### Team Members
-- [ ] Anuran Duttaroy (anuran.duttaroy@asu.edu)
-- [ ] Harshil Maskai (hmaskai@asu.edu)
-- [ ] Nilam Bari (nbari@asu.edu)
-- [ ] Saurabh Kardile (skardile@asu.edu)
-- [ ] Sudesh Shinde (sshinde4@asu.edu)
+- Anuran Duttaroy (anuran.duttaroy@asu.edu)
+- Harshil Maskai (hmaskai@asu.edu)
+- Nilam Bari (nbari@asu.edu)
+- Saurabh Kardile (skardile@asu.edu)
+- Sudesh Shinde (sshinde4@asu.edu)
 
 ### Notes
 
