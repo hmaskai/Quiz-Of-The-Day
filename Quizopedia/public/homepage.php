@@ -19,9 +19,12 @@
 </head>
 <body>
 <?php 
-	session_start();
+	//session_start();
+	include_once("../includes/session.php");
+	include_once("../includes/config.php");
+	include_once("../includes/database.php");
 	if (!isset($_SESSION['username'])) {
-    header('Location: loginPHP.php');
+    header('Location: login.php');
     exit();
 }
 	?>
@@ -45,7 +48,7 @@
 			
 			<form "method="post" action="logout.php">
 			
-				<text style="font-size:16px;"><?php echo $_SESSION['username']?></text>
+				<text style="font-size:16px;"><?php echo $_SESSION['username'];?></text>
 				<button  type="submit" class="btn btn-default"><span class="glyphicon glyphicon-off"></span> Log Out</a></button>
 			</form>
 			
@@ -83,7 +86,7 @@
 		  <form role="form">
 			<div class="form-group">
 			  <label for="comment">Question:</label>
-			  <textarea class="form-control" rows="5" id="comment"></textarea>
+			  <textarea class="form-control" rows="5" id="comment"><?php echo $_SESSION['username']?></textarea>
 			</div>
 		  </form>
 		

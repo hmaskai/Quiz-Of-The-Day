@@ -66,11 +66,11 @@ function validateForm() {
 <body>
 
 <?php
-session_start();
-
-
-
-if(!isset($_POST["username"]) && !isset($_SESSION["username"])){
+//session_start();
+include_once("../includes/session.php");
+include_once("../includes/config.php");
+include_once("../includes/database.php");
+if(!isset($_POST["username"]) && !isset($_SESSION["user_id"])){
 	?>
 	<div class="container">
 		<div class="row">
@@ -168,36 +168,33 @@ if(!isset($_POST["username"]) && !isset($_SESSION["username"])){
 else{
 	
 if(isset($_SESSION["username"])){
-	header('Location: /Quizopedia/homepage.php');
+	header('Location: homepage.php');
 	exit;
 }
 	
-$servername = "localhost";
-$username = "quizopedia_admin";
-$password = "admin";
-$dbname ="quizopedia";
+//$servername = "localhost";
+//$username = "quizopedia_admin";
+//$password = "admin";
+//$dbname ="quizopedia";
 $name = $_POST["username"];
 $pass = $_POST["login-password"];
 
 $_SESSION["username"] = '$_POST["username"]'.'$_POST["login-password"]';
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);	
-} 
 
-$sql = "SELECT fname, lname FROM login WHERE username= '$name' AND password='$pass'";
+$q = 'SELECT * FROM login WHERE username="'.$name.'" AND password="'.$pass.'" LIMIT 1';
+$sql = "SELECT fname, lname FROM login WHERE username= '$name' AND password='$pass' LIMIT 1";
 
-
-
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
+//$found_user = mysql_query($q);
+$found_user = $database->query($sql);
+$u = $found_user->fetch_array();
+//if (mysqli_num_rows($result) > 0) {
+if ($u) {
     // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "firstname: " . $row["fname"]. " - last name: " . $row["lname"];
+    while($u) {
+        echo "firstname: " . $u["fname"]. " - last name: " . $u["lname"];
 		
-		$_SESSION["username"] = $row["fname"]. $row["lname"];
+		$_SESSION['username'] = $u["fname"]." ". $u["lname"];
+		$_SESSION['user_id'] = $u['user_id'];
 		print_r(session_id());
 		header('Location: homepage.php');
 		
@@ -212,7 +209,7 @@ session_destroy(); //destroy the session
 
 }
 
-$conn->close();
+//$database->connection->close();
 
 
 
