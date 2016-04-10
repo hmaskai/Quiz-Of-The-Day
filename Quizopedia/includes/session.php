@@ -9,9 +9,7 @@ class Session {
 	
 	private $logged_in=false;
 	public $user_id;
-	//public $m_id;
 	public $message;
-	//public $perm = 1;
 	
 	function __construct() {
 		session_start();
@@ -31,6 +29,7 @@ class Session {
     // database should find user based on username/password
     if($user){
       $this->user_id = $_SESSION['user_id'] = $user->id;
+	  $_SESSION['user_id'] = $user->fname." ". $user->lname;
       $this->logged_in = true;
 	  //$this->prem = 0;
     }
@@ -49,9 +48,13 @@ class Session {
   
   
   public function logout() {
-    unset($_SESSION['user_id']);
-    unset($this->user_id);
-    $this->logged_in = false;
+//    unset($_SESSION['user_id']);
+//    unset($this->user_id);
+//    $this->logged_in = false;
+	session_unset(); //unset variables
+	session_destroy(); //destroy the session
+	header("location: login.php"); //to redirect back to "index.php" after logging out
+	exit();
   }
 
 	public function message($msg="") {

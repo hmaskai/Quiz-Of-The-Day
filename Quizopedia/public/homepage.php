@@ -23,6 +23,14 @@
 	include_once("../includes/session.php");
 	include_once("../includes/config.php");
 	include_once("../includes/database.php");
+	if(isset($_SESSION['user_id'])){
+	//header("Location: homepage.php");
+	echo $_SESSION['user_id'];
+	echo $_SESSION['username'];
+	}
+	else{
+		echo "unset";
+	}
 	if (!isset($_SESSION['username'])) {
     header('Location: login.php');
     exit();

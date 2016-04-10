@@ -70,7 +70,15 @@ function validateForm() {
 include_once("../includes/session.php");
 include_once("../includes/config.php");
 include_once("../includes/database.php");
-if(!isset($_POST["username"]) && !isset($_SESSION["user_id"])){
+if($session->is_logged_in()){
+	header("Location: homepage.php");
+	echo "set";
+	exit();
+}
+else{
+	echo "unset";
+}
+if(!isset($_SESSION["user_id"])&&!isset($_POST["username"])){
 	?>
 	<div class="container">
 		<div class="row">
@@ -166,50 +174,38 @@ if(!isset($_POST["username"]) && !isset($_SESSION["user_id"])){
 <?php
 }
 else{
+
+	$name = $_POST["username"];
+	$pass = $_POST["login-password"];
+
+	$_SESSION["username"] = '$_POST["username"]'.'$_POST["login-password"]';
+
+	$q = 'SELECT * FROM login WHERE username="'.$name.'" AND password="'.$pass.'" LIMIT 1';
 	
-if(isset($_SESSION["username"])){
-	header('Location: homepage.php');
-	exit;
-}
-	
-//$servername = "localhost";
-//$username = "quizopedia_admin";
-//$password = "admin";
-//$dbname ="quizopedia";
-$name = $_POST["username"];
-$pass = $_POST["login-password"];
 
-$_SESSION["username"] = '$_POST["username"]'.'$_POST["login-password"]';
-
-$q = 'SELECT * FROM login WHERE username="'.$name.'" AND password="'.$pass.'" LIMIT 1';
-$sql = "SELECT fname, lname FROM login WHERE username= '$name' AND password='$pass' LIMIT 1";
-
-//$found_user = mysql_query($q);
-$found_user = $database->query($sql);
-$u = $found_user->fetch_array();
-//if (mysqli_num_rows($result) > 0) {
-if ($u) {
-    // output data of each row
-    while($u) {
-        echo "firstname: " . $u["fname"]. " - last name: " . $u["lname"];
+	//$found_user = mysql_query($q);
+	$found_user = mysql_query($q);
+	$u = mysql_fetch_array($found_user);
+	//if (mysqli_num_rows($result) > 0) {
+	if ($u) {
+			$session->login($u);
+			//echo "firstname: " . $u["fname"]. " - last name: " . $u["lname"];
+			$_SESSION['username'] = $u["fname"]." ". $u["lname"];
+			$_SESSION['user_id'] = $u['user_id'];
+			//print_r(session_id());
+			header('Location: homepage.php');
+		//}
+	} else {
+		$message = "Username and/or Password incorrect.\\nTry again.";
+		echo "<script type='text/javascript'>alert('$message');</script>";
+		header('Location: login.php');
+		//session_unset(); //unset variables
+		//session_destroy(); //destroy the session
 		
-		$_SESSION['username'] = $u["fname"]." ". $u["lname"];
-		$_SESSION['user_id'] = $u['user_id'];
-		print_r(session_id());
-		header('Location: homepage.php');
-		
-    }
-} else {
-	$message = "Username and/or Password incorrect.\\nTry again.";
-	echo "<script type='text/javascript'>alert('$message');</script>";
-   session_unset(); //unset variables
 
-session_destroy(); //destroy the session
-	
+	}
 
-}
-
-//$database->connection->close();
+	//$database->connection->close();
 
 
 

@@ -14,10 +14,15 @@ class MySQLDatabase {
 	
   function __construct() {
     //$this->open_connection();
-	$this->connection = new mysqli("localhost", "anuran", "anuran", "quizopedia");
-	if ($this->connection->connect_error) {
-    die("Connection failed: " . $this->connection->connect_error);	
-	}
+	$this->connection = mysql_connect("localhost", "quizopedia_admin", "admin");
+	if (!$this->connection) {
+		die("Database connection failed: " . mysql_error());
+	} else {
+		$db_select = mysql_select_db("quizopedia", $this->connection);
+		if (!$db_select) {
+			die("Database selection failed: " . mysql_error());
+		}
+		}
 	$this->magic_quotes_active = get_magic_quotes_gpc(); // inbuilt function
 	$this->real_escape_string_exists = function_exists( "mysql_real_escape_string" ); // i.e. PHP >= v4.3.0
 
@@ -44,8 +49,7 @@ class MySQLDatabase {
 
 	public function query($sql) { 	// function to process querry
 		$this->last_query = $sql;
-		$result = $this->connection->query($sql);
-		//$result = mysql_query($sql, $this->connection);
+		$result = mysql_query($sql, $this->connection);
 		$this->confirm_query($result);
 		return $result;
 	}
@@ -92,7 +96,7 @@ class MySQLDatabase {
 	
 }
 
-$database = new mysqlDatabase();
+$database = new MySQLDatabase();
 $db =& $database;
 
 
