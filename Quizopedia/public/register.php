@@ -39,7 +39,8 @@ if ($database->query($sql) === TRUE) {
 	$_SESSION['username'] = $f_name." ". $l_name;
 	$q = 'SELECT * FROM login WHERE username="'.$email.'" AND password="'.$pass.'" LIMIT 1';
 	$found_user = $database->query($q);
-	$u = $found_user->fetch_array();
+//	$u = $found_user->fetch_array();
+	$u = $database->fetch_array($found_user);
 	$_SESSION['user_id'] = $u['user_id'];
 	header('Location: homepage.php');
 } else {
