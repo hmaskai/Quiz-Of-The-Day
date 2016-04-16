@@ -89,7 +89,7 @@ class MySQLDatabase {
 	
 	private function confirm_query($result) { // FUNCTION TO CHECK QUERRY IS RIGHT OR NOT. IT IS USED IN QUERRY() ABOVE
 		if (!$result) {
-			$output = "Database query failed: " . $this->$connection->error."<br /><br />" . "Last SQL query: " . $this->last_query;
+			$output = "Database query failed: " . mysql_error()."<br /><br />" . "Last SQL query: " . $this->last_query;
 			die($output);
 		}
 	}

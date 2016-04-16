@@ -84,13 +84,56 @@
   <div class="tab-content" style="float:left;">
     <div id="home" class="tab-pane fade in active">
       <h3>Quiz Of The Day</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-		  <form role="form">
+      <p>Try to solve the question below</p>
+		  
 			<div class="form-group">
-			  <label for="comment">Question:</label>
-			  <textarea class="form-control" rows="5" id="comment"><?php echo $_SESSION['username']?></textarea>
+				<label for="comment">Question:</label>
+				<div>
+				<text>
+					<?php 
+					$q = "select * from questions order by question_id desc LIMIT 1";
+					$result = $database->query($q);
+
+					
+					$question = $database->fetch_array($result);
+					$GLOBALS['q'] = $question;
+
+					$q_validate = "select * from student_questions where user_id = '".$session->user_id."' and question_id = '".$question["question_id"]."'";
+					$result_validate = $database->query($q_validate);
+					//$validation = $database->fetch_array($result_validate);
+					$num_rows = $database->num_rows($result_validate);
+					//echo $num_rows;
+					$GLOBALS['attempted'] = "";
+					if($num_rows != 0)
+						$GLOBALS['attempted'] = "disabled";
+					echo $question["question_text"];
+	
+					?>
+					
+					<form action="validate_answer.php" method="post" >
+						<input type="hidden" name="question_id" value="<?php echo $GLOBALS["q"]["question_id"];?>" />
+						<div class='radio'>
+							<label><input type="radio" name="optradio" value="1" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_1"];?></label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio" value="2" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_2"];?></label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio" value="3" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_3"];?></label>
+						</div>
+						<div class="radio">
+							<label><input type="radio" name="optradio" value="4" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_4"];?></label>
+						</div>
+						
+						<input type="submit" class="btn btn-success" value="Submit"/>
+					</form>
+				</text>
+
+
+				</div>
+			  
 			</div>
-		  </form>
+		  
 		
     </div>
     <div id="menu1" class="tab-pane fade">
