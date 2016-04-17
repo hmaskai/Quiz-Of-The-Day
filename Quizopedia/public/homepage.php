@@ -53,6 +53,7 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 		  
 		  <ul class="nav navbar-nav navbar-right">
+			  <li><a href="#"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["username"]?></a></li>
 			  <li><a href="logout.php"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>
 		  </ul>
 		</div><!-- /.navbar-collapse -->
@@ -64,7 +65,7 @@
 <div class="container">
 
 
-  <div><h1 class="center" >Quizopedia</h1></div>
+  
   
   <div style="float:right;">
   
@@ -83,11 +84,11 @@
   
   <div class="tab-content" style="float:left;">
     <div id="home" class="tab-pane fade in active">
-      <h3>Quiz Of The Day</h3>
-      <p>Try to solve the question below</p>
+      
+      <h3>Todays Challenge</h3>
 		  
 			<div class="form-group">
-				<label for="comment">Question:</label>
+				
 				<div>
 				<text>
 					<?php 
@@ -100,33 +101,44 @@
 
 					$q_validate = "select * from student_questions where user_id = '".$session->user_id."' and question_id = '".$question["question_id"]."'";
 					$result_validate = $database->query($q_validate);
+					echo $result_validate["answer"];
 					//$validation = $database->fetch_array($result_validate);
 					$num_rows = $database->num_rows($result_validate);
 					//echo $num_rows;
 					$GLOBALS['attempted'] = "";
-					if($num_rows != 0)
-						$GLOBALS['attempted'] = "disabled";
+					
+					if($num_rows == 0){
+					
 					echo $question["question_text"];
-	
 					?>
 					
 					<form action="validate_answer.php" method="post" >
 						<input type="hidden" name="question_id" value="<?php echo $GLOBALS["q"]["question_id"];?>" />
 						<div class='radio'>
-							<label><input type="radio" name="optradio" value="1" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_1"];?></label>
+							<label><input type="radio" name="optradio" value="1" ><?php echo $GLOBALS["q"]["option_1"];?></label>
 						</div>
 						<div class="radio">
-							<label><input type="radio" name="optradio" value="2" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_2"];?></label>
+							<label><input type="radio" name="optradio" value="2" ><?php echo $GLOBALS["q"]["option_2"];?></label>
 						</div>
 						<div class="radio">
-							<label><input type="radio" name="optradio" value="3" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_3"];?></label>
+							<label><input type="radio" name="optradio" value="3" ><?php echo $GLOBALS["q"]["option_3"];?></label>
 						</div>
 						<div class="radio">
-							<label><input type="radio" name="optradio" value="4" <?php echo $GLOBALS['attempted']; ?>><?php echo $GLOBALS["q"]["option_4"];?></label>
+							<label><input type="radio" name="optradio" value="4" ><?php echo $GLOBALS["q"]["option_4"];?></label>
 						</div>
 						
 						<input type="submit" class="btn btn-success" value="Submit"/>
 					</form>
+					<?php
+					}
+					else{
+						?>
+						<text>you have finished todays challenge</text>
+					<?php
+					}
+					?>
+					
+					
 				</text>
 
 
