@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2016 at 10:33 AM
+-- Generation Time: Apr 18, 2016 at 10:27 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -38,6 +38,15 @@ CREATE TABLE `demographics` (
   `other_country` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='collects demographic information during registration';
 
+--
+-- Dumping data for table `demographics`
+--
+
+INSERT INTO `demographics` (`asu_id`, `confidence`, `courses_completed`, `description`, `gender`, `age`, `mother_tongue`, `country_of_residence`, `other_country`) VALUES
+(24, 'Very Confident', 4, 'Some work experience in CS', 'male', '26-30', 'English', 'Another', 'Pakistan'),
+(25, 'Moderately confident', 4, 'Self learer', 'female', '31-35', 'Another', 'Another', 'India'),
+(21, 'Moderately confident', 4, 'Degree in CS', 'male', '18-25', 'English', 'Another', 'India');
+
 -- --------------------------------------------------------
 
 --
@@ -50,17 +59,20 @@ CREATE TABLE `login` (
   `user_id` int(11) NOT NULL,
   `fname` varchar(20) DEFAULT NULL,
   `lname` varchar(20) DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL
+  `gender` varchar(10) DEFAULT NULL,
+  `pretest` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Used for registration and login';
 
 --
 -- Dumping data for table `login`
 --
 
-INSERT INTO `login` (`username`, `password`, `user_id`, `fname`, `lname`, `gender`) VALUES
-('hmaskai@asu.edu', 'harshil', 16, 'Harshil', 'Maskai', 'male'),
-('anuran@gmail.com', 'anuran', 21, 'Anuran', 'Duttaroy', 'male'),
-('skardile@asu.edu', 'saurabh', 24, 'Saurabh', 'Kardile', 'male');
+INSERT INTO `login` (`username`, `password`, `user_id`, `fname`, `lname`, `gender`, `pretest`) VALUES
+('hmaskai@asu.edu', 'harshil', 16, 'Harshil', 'Maskai', 'male', 1),
+('anuran@gmail.com', 'anuran', 21, 'Anuran', 'Duttaroy', 'male', 1),
+('skardile@asu.edu', 'saurabh', 24, 'Saurabh', 'Kardile', 'male', 1),
+('nbari@asu.edu', 'nilam', 25, 'Nilam', 'Bari', 'female', 1),
+('sshinde@asu.edu', 'sudesh', 26, 'Sudesh', 'Shinde', 'male', NULL);
 
 -- --------------------------------------------------------
 
@@ -105,7 +117,8 @@ CREATE TABLE `student_questions` (
 
 INSERT INTO `student_questions` (`user_id`, `question_id`, `answer`) VALUES
 (24, 2, 1),
-(16, 2, 2);
+(16, 2, 2),
+(16, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -140,7 +153,7 @@ ALTER TABLE `student_questions`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `questions`
 --

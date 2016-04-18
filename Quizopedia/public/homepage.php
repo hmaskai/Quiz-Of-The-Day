@@ -5,17 +5,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/homepage.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-   <style>
-.center{
-	
-	font-size:40px;
-	font-family: "Times New Roman", Times, serif;
-}
 
-</style>
 </head>
 <body>
 <?php 
@@ -35,6 +28,15 @@
     header('Location: login.php');
     exit();
 }
+
+	$q="select * from login where user_id =".$session->user_id;
+	$pretest = $database->fetch_array($database->query($q));
+	
+	if(!$pretest["pretest"]){
+		
+		header('Location: pre_questionnaire.php');
+		
+	}
 	?>
 	
 	<nav class="navbar navbar-inverse">
@@ -85,12 +87,12 @@
   <div class="tab-content" style="float:left;">
     <div id="home" class="tab-pane fade in active">
       
-      <h3>Todays Challenge</h3>
+      
 		  
 			<div class="form-group">
 				
 				<div>
-				<text>
+				
 					<?php 
 					$q = "select * from questions order by question_id desc LIMIT 1";
 					$result = $database->query($q);
@@ -109,25 +111,33 @@
 					
 					if($num_rows == 0){
 					
-					echo $question["question_text"];
+					echo "<h2 class='question'>".$question["question_text"]."</h2>";
 					?>
 					
 					<form action="validate_answer.php" method="post" >
 						<input type="hidden" name="question_id" value="<?php echo $GLOBALS["q"]["question_id"];?>" />
-						<div class='radio'>
-							<label><input type="radio" name="optradio" value="1" ><?php echo $GLOBALS["q"]["option_1"];?></label>
+						<div class="radionew">
+						<input type="radio" name="radio" id="radio1" class="radio" value="1"/>
+						<label for="radio1"><?php echo $GLOBALS["q"]["option_1"];?></label>
 						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio" value="2" ><?php echo $GLOBALS["q"]["option_2"];?></label>
+
+						<div class="radionew">
+						<input type="radio" name="radio" id="radio2" class="radio" value="2"/>
+						<label for="radio2"><?php echo $GLOBALS["q"]["option_2"];?></label>
 						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio" value="3" ><?php echo $GLOBALS["q"]["option_3"];?></label>
+
+						<div class="radionew">	
+						<input type="radio" name="radio" id="radio3" class="radio" value="3"/>
+						<label for="radio3"><?php echo $GLOBALS["q"]["option_3"];?></label>
 						</div>
-						<div class="radio">
-							<label><input type="radio" name="optradio" value="4" ><?php echo $GLOBALS["q"]["option_4"];?></label>
+
+						<div class="radionew">	
+						<input type="radio" name="radio" id="radio4" class="radio" value="4"/>
+						<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
 						</div>
-						
+						<div class="submit">
 						<input type="submit" class="btn btn-success" value="Submit"/>
+						</div>
 					</form>
 					<?php
 					}
@@ -139,7 +149,7 @@
 					?>
 					
 					
-				</text>
+				
 
 
 				</div>
@@ -150,7 +160,41 @@
     </div>
     <div id="menu1" class="tab-pane fade">
       <h3>Progress</h3>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Status of attempted quiz</p>  
+	  <table class="table">
+		<thead>
+		  <tr>
+			
+			<th>Quiz Number</th>
+			<th>Result</th>
+		  </tr>
+		</thead>
+		<tbody>
+		<?php
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id from student_questions s, questions q where s.question_id=q.question_id and s.user_id=".$session->user_id;
+		  $student_answer = $database->query($q);
+		  while ($row = mysql_fetch_assoc($student_answer))
+			{
+				if($row["answer"]!=$row["correct_answer"]){
+					print_r("<tr class='danger'> \n");
+					}
+					else{
+					print_r("<tr> \n");
+					}
+				
+				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
+				if($row["answer"]==$row["correct_answer"]){
+				print_r("<td><span class='glyphicon glyphicon-ok'></span></td>\n");
+				}
+				else{
+					print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
+				}
+				print_r("<tr> \n");
+			}
+
+		?>
+		</tbody>
+	  </table>
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Class Performance</h3>
