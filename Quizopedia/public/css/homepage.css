@@ -1,8 +1,12 @@
+body{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
 .question {
     text-align:center;
 	margin-top:5%;
 	font-size:48px;
-	font-family: "Times New Roman", Times, serif;
+	
 }
 
 
@@ -21,9 +25,11 @@ div.submit {
 }
 
 label {
-  width: 200px;
+  
   border-radius: 3px;
-  border: 0px solid #D1D3D4
+  border: 0px solid #D1D3D4;
+  font-size:125%;
+  
 }
 
 /* hide input */

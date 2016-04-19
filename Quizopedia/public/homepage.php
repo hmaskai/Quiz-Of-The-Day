@@ -8,6 +8,11 @@
   <link rel="stylesheet" href="css/homepage.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+  <script src="liquidFillGauge.js" language="JavaScript"></script>
+  <style>
+        .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+   </style>
 
 </head>
 <body>
@@ -84,7 +89,7 @@
   </ul>
   </div>
   
-  <div class="tab-content" style="float:left;">
+  <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       
       
@@ -111,7 +116,7 @@
 					
 					if($num_rows == 0){
 					
-					echo "<h2 class='question'>".$question["question_text"]."</h2>";
+					echo "<h2 class='question'>Quiz #".$question["question_id"]."<br/>".$question["question_text"]."</h2>";
 					?>
 					
 					<form action="validate_answer.php" method="post" >
@@ -143,7 +148,7 @@
 					}
 					else{
 						?>
-						<text>you have finished todays challenge</text>
+						<h2 class="question"><span class="glyphicon glyphicon-thumbs-up"></span> You have finished today's challenge</h2>
 					<?php
 					}
 					?>
@@ -158,9 +163,26 @@
 		  
 		
     </div>
-    <div id="menu1" class="tab-pane fade">
+    <div id="menu1" class="tab-pane fade" style="width:100%;">
+		
       <h3>Progress</h3>
-      <p>Status of attempted quiz</p>  
+      <p>Status of attempted quiz</p> 
+<svg id="fillgauge2" width="150%" height="200" ></svg>
+
+<script language="JavaScript">
+    
+	var config1 = liquidFillGaugeDefaultSettings();
+    config1.circleColor = "#FF7777";
+    config1.textColor = "#FF4444";
+    config1.waveTextColor = "#FFAAAA";
+    config1.waveColor = "#FFDDDD";
+    config1.circleThickness = 0.2;
+    config1.textVertPosition = 0.2;
+    config1.waveAnimateTime = 1000;
+    var gauge2= loadLiquidFillGauge("fillgauge2", 50, config1);
+    
+</script>	  
+	   
 	  <table class="table">
 		<thead>
 		  <tr>
@@ -191,10 +213,20 @@
 				}
 				print_r("<tr> \n");
 			}
-
+			
+			$q="select count(question_id) from questions";
+			$total_questions = $database->fetch_array($database->query($q));
+			echo "Total number of questions: ".$total_questions[0]."<br/>";
+			
+			$q="select count(q.question_id) from questions q LEFT JOIN student_questions s ON q.question_id=s.question_id where q.correct_answer=s.answer and s.user_id=".$session->user_id;
+			$correct_answers = $database->fetch_array($database->query($q));
+			echo "Correct answers: ".$correct_answers[0]."<br/>";
+			echo "Wrong answers: ".($total_questions[0]- $correct_answers[0]);
 		?>
+		
 		</tbody>
 	  </table>
+	 
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Class Performance</h3>
