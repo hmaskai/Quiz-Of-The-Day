@@ -9,7 +9,6 @@ body{
 	
 }
 
-
 div.radionew {
 	clear: both;
 	margin: 0 20px;
@@ -95,4 +94,14 @@ input.radio:focus ~ label:before {
 .btn-success {
     clear: left;
     
+}
+
+
+
+/*for showing the question once it has been answered*/
+
+.answered_question{
+	text-align:center;
+	margin-top:5%;
+	font-size:28px;
 }

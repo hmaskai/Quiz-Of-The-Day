@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
-  <script src="liquidFillGauge.js" language="JavaScript"></script>
+  <script src="js/liquidFillGauge.js" language="JavaScript"></script>
   <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
    </style>
@@ -149,7 +149,35 @@
 					else{
 						?>
 						<h2 class="question"><span class="glyphicon glyphicon-thumbs-up"></span> You have finished today's challenge</h2>
+						<?php echo "<h2 class='answered_question'>Quiz #".$GLOBALS['q']["question_id"]."<br/>".$GLOBALS['q']["question_text"]."</h2>";?>
+						<div style="margin-left:30%">
+							<input type="hidden" name="question_id" value="<?php echo $GLOBALS["q"]["question_id"];?>" />
+							<div class="radionew">
+							<input type="radio" name="radio" id="radio1" class="radio" value="1" disabled>
+							<label for="radio1" ><?php echo $GLOBALS["q"]["option_1"];?></label>
+							</div>
+
+							<div class="radionew">
+							<input type="radio" name="radio" id="radio2" class="radio" value="2" disabled>
+							<label for="radio2"><?php echo $GLOBALS["q"]["option_2"];?></label>
+							</div>
+
+							<div class="radionew">	
+							<input type="radio" name="radio" id="radio3" class="radio" value="3" disabled>
+							<label for="radio3"><?php echo $GLOBALS["q"]["option_3"];?></label>
+							</div>
+
+							<div class="radionew">	
+							<input type="radio" name="radio" id="radio4" class="radio" value="4" disabled>
+							<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
+							</div>
+							
+						</div>
+					
+					
+					
 					<?php
+					
 					}
 					?>
 					
@@ -167,33 +195,88 @@
 		
       <h3>Progress</h3>
       <p>Status of attempted quiz</p> 
-<svg id="fillgauge2" width="150%" height="200" ></svg>
+	  <div>
+		<div style= "float:left; margin:20px">
+		  <svg id="fillgauge1" width="150" height="150" ></svg>
+		  <p style="text-align: center;">Total Quizes</p>
+		</div>
+		<div style="float:left; margin:20px">
+		  <svg id="fillgauge2" width="150" height="150" ></svg>
+		  <p style="text-align:center; ">Correct Answers</p>
+		</div>
+		<div style="float:left; margin:20px">
+		  <svg id="fillgauge3" width="150" height="150" ></svg>
+		  <p style="text-align:center;">Accuracy</p>
+		</div>
+	  </div>
+	   <?php 
+		$q="select count(question_id) from questions";
+		$total_questions = $database->fetch_array($database->query($q));
+		$_GLOBAL["total questions"] = $total_questions[0];
+		
+		$q="select count(q.question_id) from questions q LEFT JOIN student_questions s ON q.question_id=s.question_id where q.correct_answer=s.answer and s.user_id=".$session->user_id;
+		$correct_answers = $database->fetch_array($database->query($q));
+		$_GLOBAL["correct answers"] = $correct_answers[0];
+		?>
 
-<script language="JavaScript">
+		<script language="JavaScript">
     
-	var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#FF7777";
-    config1.textColor = "#FF4444";
-    config1.waveTextColor = "#FFAAAA";
-    config1.waveColor = "#FFDDDD";
-    config1.circleThickness = 0.2;
-    config1.textVertPosition = 0.2;
-    config1.waveAnimateTime = 1000;
-    var gauge2= loadLiquidFillGauge("fillgauge2", 50, config1);
-    
-</script>	  
+		var config1 = liquidFillGaugeDefaultSettings();
+		config1.circleColor = "#FF7777";
+		config1.textColor = "#FF4444";
+		config1.waveTextColor = "#FFAAAA";
+		config1.waveColor = "#FFDDDD";
+		config1.circleThickness = 0.2;
+		config1.textVertPosition = 0.2;
+		config1.waveAnimateTime = 1000;
+		config1.displayPercent = false;
+		config1.maxValue = 30;
+		loadLiquidFillGauge("fillgauge1", <?php echo $_GLOBAL["total questions"]?>, config1);
+		var config2 = liquidFillGaugeDefaultSettings();
+		config2.circleColor = "#178BCA";
+		config2.textColor = "#178BCA";
+		config2.waveTextColor = "#178BCA";
+		config2.waveColor = "#b3ffff";
+		config2.circleThickness = 0.2;
+		config2.textVertPosition = 0.2;
+		config2.waveAnimateTime = 1000;
+		config2.displayPercent = false;
+		config2.maxValue = 30;
+		loadLiquidFillGauge("fillgauge2", <?php echo $_GLOBAL["correct answers"]?>, config2);
+		var config3 = liquidFillGaugeDefaultSettings();
+		config3.circleColor = "#ff4d4d";
+		config3.textColor = "#ff4d4d";
+		config3.waveTextColor = "#ff4d4d";
+		config3.waveColor = "#ffe6e6";
+		config3.circleThickness = 0.2;
+		config3.textVertPosition = 0.2;
+		config3.waveAnimateTime = 1000;
+		loadLiquidFillGauge("fillgauge3", <?php echo ($_GLOBAL["correct answers"]/$_GLOBAL["total questions"])*100?>, config3);
+		
+		
+		</script>	  
 	   
-	  <table class="table">
+
+	 
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Class Performance</h3>
+      <p>Students can compare their performance with others.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Recommendations</h3>
+      <p>Click on individual rows below to view the details.</p>
+	  	  <table class="table">
 		<thead>
 		  <tr>
-			
+			<th>Date</th>
 			<th>Quiz Number</th>
 			<th>Result</th>
 		  </tr>
 		</thead>
 		<tbody>
 		<?php
-		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id from student_questions s, questions q where s.question_id=q.question_id and s.user_id=".$session->user_id;
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from student_questions s, questions q where s.question_id=q.question_id and s.user_id=".$session->user_id;
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
@@ -203,7 +286,7 @@
 					else{
 					print_r("<tr> \n");
 					}
-				
+				print_r("<td>".$row["date"]."</td>");
 				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
 				if($row["answer"]==$row["correct_answer"]){
 				print_r("<td><span class='glyphicon glyphicon-ok'></span></td>\n");
@@ -214,27 +297,11 @@
 				print_r("<tr> \n");
 			}
 			
-			$q="select count(question_id) from questions";
-			$total_questions = $database->fetch_array($database->query($q));
-			echo "Total number of questions: ".$total_questions[0]."<br/>";
 			
-			$q="select count(q.question_id) from questions q LEFT JOIN student_questions s ON q.question_id=s.question_id where q.correct_answer=s.answer and s.user_id=".$session->user_id;
-			$correct_answers = $database->fetch_array($database->query($q));
-			echo "Correct answers: ".$correct_answers[0]."<br/>";
-			echo "Wrong answers: ".($total_questions[0]- $correct_answers[0]);
 		?>
 		
 		</tbody>
 	  </table>
-	 
-    </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3>Class Performance</h3>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-    </div>
-    <div id="menu3" class="tab-pane fade">
-      <h3>Recommendations</h3>
-      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
     </div>
   </div>
 </div>
