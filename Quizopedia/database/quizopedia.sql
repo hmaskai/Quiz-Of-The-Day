@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2016 at 10:27 AM
+-- Generation Time: Apr 20, 2016 at 03:39 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -88,16 +88,17 @@ CREATE TABLE `questions` (
   `option_3` varchar(500) NOT NULL,
   `option_4` varchar(500) NOT NULL,
   `correct_answer` int(1) NOT NULL,
-  `tags` varchar(500) NOT NULL
+  `tags` varchar(500) NOT NULL,
+  `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`question_id`, `question_text`, `option_1`, `option_2`, `option_3`, `option_4`, `correct_answer`, `tags`) VALUES
-(1, 'Which inheritance does java not support?', 'multiple', 'multilevel', 'single', 'runtime', 1, 'inheritance'),
-(2, 'How is unused memory cleared in java?', 'garbage bins', 'garbage collectors', 'crawlers', 'destructors', 2, 'garbage collection');
+INSERT INTO `questions` (`question_id`, `question_text`, `option_1`, `option_2`, `option_3`, `option_4`, `correct_answer`, `tags`, `date`) VALUES
+(1, 'Which inheritance does java not support?', 'multiple', 'multilevel', 'single', 'runtime', 1, 'inheritance', '2016-04-18'),
+(2, 'How is unused memory cleared in java?', 'garbage bins', 'garbage collectors', 'crawlers', 'destructors', 2, 'garbage collection', '2016-04-19');
 
 -- --------------------------------------------------------
 
@@ -118,7 +119,8 @@ CREATE TABLE `student_questions` (
 INSERT INTO `student_questions` (`user_id`, `question_id`, `answer`) VALUES
 (24, 2, 1),
 (16, 2, 2),
-(16, 1, 2);
+(16, 1, 2),
+(21, 2, 4);
 
 --
 -- Indexes for dumped tables
