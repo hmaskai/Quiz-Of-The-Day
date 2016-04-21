@@ -48,8 +48,7 @@ $_GLOBAL["name"] = $name;
 		echo $row["question_text"];
 		echo'	<div class="radio">';
 		echo '<input type="hidden" name="question_id'.$i.'" value="'.$row["question_id"].'" />';
-		echo $row["question_id"];
-		echo $row["question_id"];
+		
 		echo'		</div>';
 		echo'	<div class="radio">';
 		echo'		  <label><input type="radio" name="answer'.$i.'" value = "1">'.$row["option_1"].'</label>';
