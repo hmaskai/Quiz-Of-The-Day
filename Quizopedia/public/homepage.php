@@ -210,11 +210,11 @@
 		</div>
 	  </div>
 	   <?php 
-		$q="select count(question_id) from questions";
+		$q="select count(question_id) from questions where type='Q'";
 		$total_questions = $database->fetch_array($database->query($q));
 		$_GLOBAL["total questions"] = $total_questions[0];
 		
-		$q="select count(q.question_id) from questions q LEFT JOIN student_questions s ON q.question_id=s.question_id where q.correct_answer=s.answer and s.user_id=".$session->user_id;
+		$q="select count(q.question_id) from questions q LEFT JOIN student_questions s ON q.question_id=s.question_id where q.correct_answer=s.answer and type='Q' and s.user_id=".$session->user_id;
 		$correct_answers = $database->fetch_array($database->query($q));
 		$_GLOBAL["correct answers"] = $correct_answers[0];
 		?>
@@ -276,7 +276,7 @@
 		</thead>
 		<tbody>
 		<?php
-		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where s.user_id=".$session->user_id;
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where q.type='Q' and s.user_id=".$session->user_id;
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
