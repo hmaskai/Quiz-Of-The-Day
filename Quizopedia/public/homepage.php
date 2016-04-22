@@ -99,7 +99,7 @@
 				<div>
 				
 					<?php 
-					$q = "select * from questions order by question_id desc LIMIT 1";
+					$q = "select * from questions where type = 'Q' order by question_id desc LIMIT 1";
 					$result = $database->query($q);
 
 					
