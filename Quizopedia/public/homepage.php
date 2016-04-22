@@ -276,7 +276,7 @@
 		</thead>
 		<tbody>
 		<?php
-		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from student_questions s, questions q where s.question_id=q.question_id and s.user_id=".$session->user_id;
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where s.user_id=".$session->user_id;
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
