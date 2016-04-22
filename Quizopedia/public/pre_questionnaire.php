@@ -4,15 +4,69 @@
   <title>Quizopedia</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/prequestionnaire.css">
 </head>
+
 <body>
 
+<?php
+	include_once("../includes/session.php");
+	include_once("../includes/config.php");
+	include_once("../includes/database.php");
+
+?>
+<!-- nilams code -->
+<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>                        
+		</button>
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="#">Quizopedia</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="myNavbar">
+		  
+		  <ul class="nav navbar-nav navbar-right">
+			  <li><a href="#"><span class="glyphicon glyphicon-user"></span> <?php echo $_SESSION["username"]?></a></li>
+			  <li><a href="logout.php"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>
+		  </ul>
+		</div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+<!-- nilams code ends here -->
+
+
 <div class="container">
+
   <h2>Questionnaire - Part 1</h2>
   <p>Answer the questions to the best of your knowledge below</p>
+  
+  
+  <?php 
+    
+	if (!isset($session->user_id)) {
+    header('Location: login.php');
+    exit();
+	}
+	$q="select * from login where user_id =".$session->user_id;
+	$pretest = $database->fetch_array($database->query($q));
+	
+	if($pretest["pretest"]){
+		
+		header('Location: homepage.php');
+		
+	}
+	
+	?>
   
   <!--Pre Questionnaire Form -->
   
@@ -146,7 +200,7 @@
 	<div class="form-group">
 	  <input type="text" class="form-control" id="countryResidence" name="countryResidence">
 	</div>
-    <input type="submit" class="btn btn-success" value="Submit"/>
+    <input type="submit" class="btn btn-success" value="Next"/>
   </form>
   
    <!--Pre Questionnaire Form Ends Here-->

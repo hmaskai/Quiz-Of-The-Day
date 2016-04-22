@@ -29,7 +29,7 @@
 	else{
 		echo "unset";
 	}*/
-	if (!isset($_SESSION['username'])) {
+	if (!isset($session->user_id)) {
     header('Location: login.php');
     exit();
 }

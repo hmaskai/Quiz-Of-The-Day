@@ -41,6 +41,8 @@ class Session {
       $u = mysql_fetch_array($user);
 	  //$this->user_id = 
 	  $_SESSION['user_id'] = $u['u_id'];
+	  
+	  $_SESSION["username"] = $u['fname']." ".$u['lname'];
       //$this->logged_in = true;
 	  //$this->prem = 0;
     }
