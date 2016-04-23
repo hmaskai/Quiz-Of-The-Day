@@ -172,24 +172,13 @@
 							<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
 							</div>
 							
-						</div>
-					
-					
-					
-					<?php
-					
+						</div>			
+					<?php		
 					}
 					?>
-					
-					
-				
-
-
-				</div>
-			  
+				</div>	  
 			</div>
-		  
-		
+
     </div>
     <div id="menu1" class="tab-pane fade" style="width:100%;">
 		

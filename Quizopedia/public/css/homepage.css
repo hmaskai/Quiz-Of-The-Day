@@ -2,6 +2,11 @@ body{
 	font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
+.container h3{
+color: #337ab7;
+font-weight:800;
+font-size: 40px;
+}
 
 .question {
     text-align:center;
