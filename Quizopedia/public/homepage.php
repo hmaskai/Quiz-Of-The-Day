@@ -125,7 +125,7 @@
 					$question = $database->fetch_array($result);
 					$GLOBALS['q'] = $question;
 
-					$q_validate = "select * from student_questions where user_id = '".$session->user_id."' and question_id = '".$question["question_id"]."'";
+					$q_validate = "select * from student_questions where user_id = '".$session->user_id."' and question_id = '".$question["question_id"]."' and answer<>-1";
 					$result_validate = $database->query($q_validate);
 					echo $result_validate["answer"];
 					//$validation = $database->fetch_array($result_validate);
@@ -284,12 +284,15 @@
 		</thead>
 		<tbody>
 		<?php
-		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where q.type='Q' and s.user_id=".$session->user_id;
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where q.type='Q' and s.user_id=".$session->user_id." Order by q.date desc";
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
 				if($row["answer"]!=$row["correct_answer"]){
-					print_r("<tr class='danger clickable-row' data-href='recommendation.php'> \n");
+					if($row["answer"]==-1)
+						print_r("<tr class='info clickable-row' data-href='recommendation.php'> \n");
+					else
+						print_r("<tr class='danger clickable-row' data-href='recommendation.php'> \n");
 					}
 					else{
 					print_r("<tr class='clickable-row' data-href='recommendation.php'> \n");
@@ -297,10 +300,13 @@
 				print_r("<td>".$row["date"]."</td>");
 				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
 				if($row["answer"]==$row["correct_answer"]){
-				print_r("<td><span class='glyphicon glyphicon-ok'></span></td>\n");
+					print_r("<td><span class='glyphicon glyphicon-ok'></span></td>\n");
 				}
 				else{
-					print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
+					if($row["answer"]==-1)
+						print_r("<td><span class='glyphicon glyphicon-minus'></span></td>\n");
+					else
+						print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
 				}
 				print_r("<tr> \n");
 			}	
