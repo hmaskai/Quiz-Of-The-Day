@@ -21,16 +21,41 @@
 	$op2=$_POST['op2'];
 	$op3=$_POST['op3'];
 	$op4=$_POST['op4'];
-	//$tags=$_POST['tags'];
 	
-	if(!empty($_POST['BasicConcept[]'])) {
-		
-    foreach($_POST['BasicConcept'] as $check) {
-            echo $check; //echoes the value set in the HTML form for each checked checkbox.
-                         //so, if I were to check 1, 3, and 5 it would echo value 1, value 3, value 5.
-                         //in your case, it would echo whatever $row['Report ID'] is equivalent to.
-    }
+	
+	
+	echo $question;
+	echo $op1;
+	echo $op2;
+	echo $op3;
+	echo $op4;
+	echo $correctAns;
+if(!empty($_POST['BasicConcept'])) {
+	foreach($_POST['BasicConcept'] as $check1)
+	echo $check1;
 }
+if(!empty($_POST['DataTypes'])) {
+	foreach($_POST['DataTypes'] as $check2)
+	echo $check2;
+}	
+if(!empty($_POST['Operation'])) {
+	foreach($_POST['Operation'] as $check3)
+	echo $check3;
+}
+if(!empty($_POST['Array'])) {
+	foreach($_POST['Array'] as $check4)
+	echo $check4;
+}
+if(!empty($_POST['ControlStructure'])) {
+	foreach($_POST['ControlStructure'] as $check4)
+	echo $check4;
+}
+if(!empty($_POST['InterfaceInheritance'])) {
+	foreach($_POST['InterfaceInheritance'] as $check5)
+	echo $check5;
+}
+
+	
 	
 	/*$sql = "INSERT INTO questions (question_text,option_1,option_2,option_3,option_4,correct_answer,tags)
 			VALUES ('$question','$op1','$op2','$op3','$op4','$correctAns','$tags')";

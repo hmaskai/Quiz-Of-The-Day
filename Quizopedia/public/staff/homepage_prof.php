@@ -114,8 +114,9 @@ function createTag(text) {
 
 <div class="fieldgroup">
 
+<div>
 	
-	<ul type="none">
+    <div style="float:left; width:20%; "><ul type="none">
 		<li>
 		  <input type="checkbox" name="BasicConcept[]" id="option" value="Basic Concepts"><label for="option"> Basic Concepts</label>
 		  <ul type="none">
@@ -124,21 +125,65 @@ function createTag(text) {
 			<li><label><input type="checkbox" name="BasicConcept[]" class="subOption" value="Variables"> Variables</label></li>
 		  </ul>
 		</li>
-	</ul>
-  
-  
-	<ul type="none">
+	</ul></div>
+    <div style="float:left; width:24%; "><ul type="none">
 		<li>
-		  <input type="checkbox" id="option1"><label for="option1"> Data Types</label>
+		  <input type="checkbox" name="DataTypes[]" id="option1" value="Data Types"><label for="option1"> Data Types</label>
 		  <ul type="none">
-			<li><label><input type="checkbox" name="Data Types" class="Data_Types" value="Wapper Classes"> Wrapper Classes</label></li>
-			<li><label><input type="checkbox" name="Data Types" class="Data_Types" value="String"> String</label></li>
-			<li><label><input type="checkbox" name="Data Types" class="Data_Types" value="Constants"> Constants</label></li>
-			<li><label><input type="checkbox" name="Data Types" class="Data_Types" value="Primitive Data Type"> Primitive Data Type</label></li>
+			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Wapper Classes"> Wrapper Classes</label></li>
+			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="String"> String</label></li>
+			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Constants"> Constants</label></li>
+			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Primitive Data Type"> Primitive Data Type</label></li>
 		  </ul>
 		</li>
-	</ul>
-	  
+	</ul></div>		
+    <div style="float:left; width:27%; "><ul type="none">
+		<li>
+		  <input type="checkbox" name="Operation[]" id="option2" value="Operations"><label for="option2"> Operations</label>
+		  <ul type="none">
+			<li><label><input type="checkbox" name="Operation[]" class="Operations" value="Boolean Expressions"> Boolean Expressions</label></li>
+			<li><label><input type="checkbox" name="Operation[]" class="Operations" value="Arithmetic Expressions"> Arithmetic Expressions</label></li>
+		  </ul>
+		</li>
+	</ul></div>
+	<div style="float:left; width:27%; "><ul type="none">
+		<li>
+		  <input type="checkbox" id="option3" name="Array[]" value="Arrays"><label for="option3"> Arrays</label>
+		  <ul type="none">
+			<li><label><input type="checkbox" name="Array[]" class="Arrays" value="Two Dimensional Array"> Two Dimensional Array</label></li>
+			<li><label><input type="checkbox" name="Array[]" class="Arrays" value="ArrayList"> ArrayList</label></li>
+		  </ul>
+		</li>
+	</ul></div>
+	<div style="float:left; width:20%; clear:left; "><ul type="none">
+		<li>
+		  <input type="checkbox" id="option4" name="ControlStructure[]" value="ControlStructures"><label for="option4"> Control Structures</label>
+		  <ul type="none">
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Exceptions"> Exceptions</label></li>
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Nested Loops"> Nested Loops</label></li>
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="For Loop"> For Loop</label></li>
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Do-While Loop"> Do-While Loop</label></li>
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Switch Statement"> Switch Statement</label></li>
+			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Decision Types"> Decision Types</label></li>
+		  </ul>
+		</li>
+	</ul></div>
+		<div style="float:left; width:27%; "><ul type="none">
+		<li>
+		  <input type="checkbox" id="option5" name="InterfaceInheritance[]" value="InterfaceInheritances"><label for="option5"> Interface & Inheritance</label>
+		  <ul type="none">
+			<li><label><input type="checkbox" name="InterfaceInheritance[]" class="Interface_Inheritance" value="Interface"> Interface</label></li>
+			<li><label><input type="checkbox" name="InterfaceInheritance[]" class="Interface_Inheritance" value="Inheritance"> Inheritance</label></li>
+		  </ul>
+		</li>
+	</ul></div>	
+
+
+	
+	</div>
+  
+  
+	
 	
 	
 
@@ -163,20 +208,93 @@ function createTag(text) {
 
 
 		var checkboxes1 = document.querySelectorAll('input.Data_Types'),
-		checkall = document.getElementById('option1');
+		checkall1 = document.getElementById('option1');
 
 		for(var i=0; i<checkboxes1.length; i++) {
 		  checkboxes1[i].onclick = function() {
 			var checkedCount = document.querySelectorAll('input.Data_Types:checked').length;
 
-			checkall.checked = checkedCount > 0;
-			checkall.indeterminate = checkedCount > 0 && checkedCount < checkboxes1.length;
+			checkall1.checked = checkedCount > 0;
+			checkall1.indeterminate = checkedCount > 0 && checkedCount < checkboxes1.length;
 		  }
 		}
 
-		checkall.onclick = function() {
+		checkall1.onclick = function() {
 		  for(var i=0; i<checkboxes1.length; i++) {
 			checkboxes1[i].checked = this.checked;
+		  }
+		}
+		
+		
+		var checkboxes2 = document.querySelectorAll('input.Operations'),
+		checkall2 = document.getElementById('option2');
+
+		for(var i=0; i<checkboxes2.length; i++) {
+		  checkboxes2[i].onclick = function() {
+			var checkedCount = document.querySelectorAll('input.Operations:checked').length;
+
+			checkall2.checked = checkedCount > 0;
+			checkall2.indeterminate = checkedCount > 0 && checkedCount < checkboxes2.length;
+		  }
+		}
+
+		checkall2.onclick = function() {
+		  for(var i=0; i<checkboxes2.length; i++) {
+			checkboxes2[i].checked = this.checked;
+		  }
+		}
+		
+		var checkboxes3 = document.querySelectorAll('input.Arrays'),
+		checkall3 = document.getElementById('option3');
+
+		for(var i=0; i<checkboxes3.length; i++) {
+		  checkboxes3[i].onclick = function() {
+			var checkedCount = document.querySelectorAll('input.Arrays:checked').length;
+
+			checkall3.checked = checkedCount > 0;
+			checkall3.indeterminate = checkedCount > 0 && checkedCount < checkboxes3.length;
+		  }
+		}
+
+		checkall3.onclick = function() {
+		  for(var i=0; i<checkboxes3.length; i++) {
+			checkboxes3[i].checked = this.checked;
+		  }
+		}
+		
+		var checkboxes4 = document.querySelectorAll('input.Control_Structures'),
+		checkall4 = document.getElementById('option4');
+
+		for(var i=0; i<checkboxes4.length; i++) {
+		  checkboxes4[i].onclick = function() {
+			var checkedCount = document.querySelectorAll('input.Control_Structures:checked').length;
+
+			checkall4.checked = checkedCount > 0;
+			checkall4.indeterminate = checkedCount > 0 && checkedCount < checkboxes4.length;
+		  }
+		}
+
+		checkall4.onclick = function() {
+		  for(var i=0; i<checkboxes4.length; i++) {
+			checkboxes4[i].checked = this.checked;
+		  }
+		}
+		
+		var checkboxes5 = document.querySelectorAll('input.Interface_Inheritance'),
+		checkall5 = document.getElementById('option5');
+
+		for(var i=0; i<checkboxes5.length; i++) {
+		  checkboxes5[i].onclick = function() {
+			var checkedCount = document.querySelectorAll('input.Interface_Inheritance:checked').length;
+
+			checkall5.checked = checkedCount > 0;
+			checkall5.indeterminate = checkedCount > 0 && checkedCount < checkboxes5.length;
+		  }
+		}
+
+		checkall5.onclick = function() {
+		  for(var i=0; i<checkboxes5.length; i++) {
+			checkboxes5[i].checked = this.checked;
 		  }
 		}
 
@@ -186,7 +304,7 @@ function createTag(text) {
 </div>
 
 
-
+<!--new code for tag
 <div class="fieldgroup">
 
 	
@@ -207,13 +325,7 @@ function createTag(text) {
         <select name="region" id="region_list" size="1">
             <option value="00">Select tag First</option>
         </select>
-    </fieldset>
-
-	
-	
-		
-		
-		
+    </fieldset>		
 		
 	
 	<script language="javascript">
@@ -253,12 +365,12 @@ function createTag(text) {
 	</script>
 	
 	
-			<!--new code for tag-->
+			
 		
 		
 	
 	
-</div>
+</div>-->
 </fieldset>	
 <br>	
 <div class="button-container">
@@ -269,6 +381,13 @@ function createTag(text) {
 		
 	</div>
 </div>
+<button onclick="myButton()">Click me</button>
+<script>
+function myButton()
+{
+window.location="http://www.siteforinfotech.com";
+}
+</script>
 </form>
 
 
