@@ -263,9 +263,18 @@
 		
 		
 		</script>	  
-	   
+	   <?php
+		 include_once("../includes/functions.php");
+		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
+		 echo "Hi I am here";
+		 ?>
 	<div id="sunBurst" style="clear:left;"></div>
-	 <script>loadSunBurst();</script>
+	 <script>
+	 
+	 
+	 loadSunBurst(<?php echo $_GLOBAL['sunBurstJson'];?>);
+	 
+	 </script>
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Class Performance</h3>
