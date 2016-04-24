@@ -42,15 +42,15 @@ function createTag(text) {
 			<span class="icon-bar"></span>                        
 		</button>
 		<div class="navbar-header">
-		  <a class="navbar-brand" href="#">Quizopedia</a>
+		  <a class="navbar-brand" href="#">Quizopedia for Professor</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="myNavbar">
 		  
 		  <ul class="nav navbar-nav navbar-right">
-			  <li><a href="#"><span class="glyphicon glyphicon-user"></span>Professor</a></li>
-			  <li><a href="logout.php"><span class="glyphicon glyphicon-off"></span>Log Out</a></li>
+			  <li><a href="#"><span class="glyphicon glyphicon-user"></span> Professor</a></li>
+			  <li><a href="logout.php"><span class="glyphicon glyphicon-off"></span> Log Out</a></li>
 		  </ul>
 		</div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
@@ -59,18 +59,23 @@ function createTag(text) {
 
 <div class= "container">
 <form class="quizsettings" id="editexamquestionformmodel" action="questionDB.php" method="post">
+ 
+
+
 <fieldset>
-	<h3>Question??</h3>
+	<h3>Enter today's quiz in the area below:</h3>
 	<br>
 	<textarea rows="4" cols="50" name="question" class="form-control">
 	</textarea>
 </fieldset>
+<h2>Enter the date:</h2>
+<input type="date" name="quizDate">
 <fieldset class="createanswers">
 <div class="fieldgroup">
 	<h2>Option 1</h2>
 	<div>
 		
-		<input placeholder="Correct answer" id="EditExamQuestionFormModel_answer_1" name="op1" type="text" class="form-control"/>
+		<input placeholder="Enter option 1" id="EditExamQuestionFormModel_answer_1" name="op1" type="text" class="form-control"/>
 		
 	</div>
 </div>
@@ -78,7 +83,7 @@ function createTag(text) {
 	<h2>Option 2</h2>
 	<div>
 		
-		<input placeholder="Wrong answer 1" id="EditExamQuestionFormModel_answer_2" name="op2" type="text" class="form-control"/>
+		<input placeholder="Enter option 2" id="EditExamQuestionFormModel_answer_2" name="op2" type="text" class="form-control"/>
 		
 	</div>
 </div>
@@ -86,7 +91,7 @@ function createTag(text) {
 	<h2>Option 3</h2>
 	<div>
 	
-	<input placeholder="Wrong answer 2" id="EditExamQuestionFormModel_answer_3" name="op3" type="text" class="form-control"/>
+	<input placeholder="Enter option 3" id="EditExamQuestionFormModel_answer_3" name="op3" type="text" class="form-control"/>
 	
 	</div>
 	</div>
@@ -94,7 +99,7 @@ function createTag(text) {
 <div class="fieldgroup">
 	<h2>Option 4</h2>
 	
-	<input placeholder="Wrong answer 3" id="EditExamQuestionFormModel_answer_4" name="op4" type="text" class="form-control"/>
+	<input placeholder="Enter option 4" id="EditExamQuestionFormModel_answer_4" name="op4" type="text" class="form-control"/>
 	
 	</div>
 
@@ -130,7 +135,7 @@ function createTag(text) {
 		<li>
 		  <input type="checkbox" name="DataTypes[]" id="option1" value="Data Types"><label for="option1"> Data Types</label>
 		  <ul type="none">
-			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Wapper Classes"> Wrapper Classes</label></li>
+			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Wrapper Classes"> Wrapper Classes</label></li>
 			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="String"> String</label></li>
 			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Constants"> Constants</label></li>
 			<li><label><input type="checkbox" name="DataTypes[]" class="Data_Types" value="Primitive Data Type"> Primitive Data Type</label></li>
@@ -157,7 +162,7 @@ function createTag(text) {
 	</ul></div>
 	<div style="float:left; width:20%; clear:left; "><ul type="none">
 		<li>
-		  <input type="checkbox" id="option4" name="ControlStructure[]" value="ControlStructures"><label for="option4"> Control Structures</label>
+		  <input type="checkbox" id="option4" name="ControlStructure[]" value="Control Structures"><label for="option4"> Control Structures</label>
 		  <ul type="none">
 			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Exceptions"> Exceptions</label></li>
 			<li><label><input type="checkbox" name="ControlStructure[]" class="Control_Structures" value="Nested Loops"> Nested Loops</label></li>
@@ -170,7 +175,7 @@ function createTag(text) {
 	</ul></div>
 		<div style="float:left; width:27%; "><ul type="none">
 		<li>
-		  <input type="checkbox" id="option5" name="InterfaceInheritance[]" value="InterfaceInheritances"><label for="option5"> Interface & Inheritance</label>
+		  <input type="checkbox" id="option5" name="InterfaceInheritance[]" value="Interface & Inheritances"><label for="option5"> Interface & Inheritance</label>
 		  <ul type="none">
 			<li><label><input type="checkbox" name="InterfaceInheritance[]" class="Interface_Inheritance" value="Interface"> Interface</label></li>
 			<li><label><input type="checkbox" name="InterfaceInheritance[]" class="Interface_Inheritance" value="Inheritance"> Inheritance</label></li>
@@ -381,12 +386,7 @@ function createTag(text) {
 		
 	</div>
 </div>
-<button onclick="myButton()">Click me</button>
-<script>
-function myButton()
-{
-window.location="http://www.siteforinfotech.com";
-}
+
 </script>
 </form>
 
