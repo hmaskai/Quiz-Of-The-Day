@@ -10,10 +10,29 @@
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
   <script src="js/liquidFillGauge.js" language="JavaScript"></script>
+  <script src="js/sunBurst.js" language="JavaScript"></script>
   <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
    </style>
+	<script>
+	jQuery(document).ready(function($) {
+		$(".clickable-row").click(function() {
+//			var value=$(this).find('td:first').html();
+//			   alert(value);
+			var loc=$(this).data("href");
+			var data = {
+				str : "testString"
+			};
+		$.post('recommendation.php', data, function(response) {
+            window.document.location = loc;
+        });
+		
+		
+		});
+	});
+	
 
+	</script>
 </head>
 <body>
 <?php 
@@ -29,7 +48,7 @@
 	else{
 		echo "unset";
 	}*/
-	if (!isset($_SESSION['username'])) {
+	if (!isset($session->user_id)) {
     header('Location: login.php');
     exit();
 }
@@ -172,24 +191,13 @@
 							<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
 							</div>
 							
-						</div>
-					
-					
-					
-					<?php
-					
+						</div>			
+					<?php		
 					}
 					?>
-					
-					
-				
-
-
-				</div>
-			  
+				</div>	  
 			</div>
-		  
-		
+
     </div>
     <div id="menu1" class="tab-pane fade" style="width:100%;">
 		
@@ -256,8 +264,8 @@
 		
 		</script>	  
 	   
-
-	 
+	<div id="sunBurst" style="clear:left;"></div>
+	 <script>loadSunBurst();</script>
     </div>
     <div id="menu2" class="tab-pane fade">
       <h3>Class Performance</h3>
@@ -266,7 +274,7 @@
     <div id="menu3" class="tab-pane fade">
       <h3>Recommendations</h3>
       <p>Click on individual rows below to view the details.</p>
-	  	  <table class="table">
+	  <table id="table" class="table table-hover">
 		<thead>
 		  <tr>
 			<th>Date</th>
@@ -281,10 +289,10 @@
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
 				if($row["answer"]!=$row["correct_answer"]){
-					print_r("<tr class='danger'> \n");
+					print_r("<tr class='danger clickable-row' data-href='recommendation.php'> \n");
 					}
 					else{
-					print_r("<tr> \n");
+					print_r("<tr class='clickable-row' data-href='recommendation.php'> \n");
 					}
 				print_r("<td>".$row["date"]."</td>");
 				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
@@ -295,11 +303,8 @@
 					print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
 				}
 				print_r("<tr> \n");
-			}
-			
-			
+			}	
 		?>
-		
 		</tbody>
 	  </table>
     </div>

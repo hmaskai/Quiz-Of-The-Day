@@ -4,22 +4,12 @@
   <title>Quizopedia</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="css/prequestionnaire.css">
+  <link rel="stylesheet" href="css/homepage.css">
 </head>
-
 <body>
-
-<?php
-	include_once("../includes/session.php");
-	include_once("../includes/config.php");
-	include_once("../includes/database.php");
-
-?>
-<!-- nilams code -->
 <nav class="navbar navbar-inverse">
 	  <div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
@@ -42,31 +32,10 @@
 		</div><!-- /.navbar-collapse -->
 	  </div><!-- /.container-fluid -->
 	</nav>
-<!-- nilams code ends here -->
-
 
 <div class="container">
-
-  <h2>Questionnaire - Part 1</h2>
+  <h3>Questionnaire - Part 1</h3>
   <p>Answer the questions to the best of your knowledge below</p>
-  
-  
-  <?php 
-    
-	if (!isset($session->user_id)) {
-    header('Location: login.php');
-    exit();
-	}
-	$q="select * from login where user_id =".$session->user_id;
-	$pretest = $database->fetch_array($database->query($q));
-	
-	if($pretest["pretest"]){
-		
-		header('Location: homepage.php');
-		
-	}
-	
-	?>
   
   <!--Pre Questionnaire Form -->
   
@@ -200,7 +169,7 @@
 	<div class="form-group">
 	  <input type="text" class="form-control" id="countryResidence" name="countryResidence">
 	</div>
-    <input type="submit" class="btn btn-success" value="Next"/>
+    <input type="submit" class="btn btn-success" value="Submit"/>
   </form>
   
    <!--Pre Questionnaire Form Ends Here-->
