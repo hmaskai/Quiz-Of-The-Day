@@ -1,13 +1,17 @@
 <?php
-include_once("../includes/session.php");
-include_once("../includes/config.php");
-include_once("../includes/database.php");
 
-	function json_convert($q) {
+class MyFunction {
+	//public $json_d;
+	
+	
+	
+	public function json_convert($q) {
 
+		
 		//$q = "select lower(tags) as tags from questions";
-		$result = $database->query($q);
-		$r = $database->fetch_array($result);
+		//$result = $database->query($q);
+		$result = mysql_query($q);
+		$r = mysql_fetch_array($result);
 
 		$str = "";
 
@@ -185,5 +189,6 @@ include_once("../includes/database.php");
 
 		return $json_d;
 	}
-
+}
+	$functions = new MyFunction();
 ?>
