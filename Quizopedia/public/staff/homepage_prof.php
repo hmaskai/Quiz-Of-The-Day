@@ -115,6 +115,9 @@ function createTag(text) {
 
 </fieldset>
 <br>
+
+<h2>Select all relevant concepts associated with this question below:</h2>
+<br/>
 <fieldset class="explainquestion">
 
 <div class="fieldgroup">

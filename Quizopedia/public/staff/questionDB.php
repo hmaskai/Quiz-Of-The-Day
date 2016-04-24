@@ -51,6 +51,19 @@ if(!empty($_POST['InterfaceInheritance'])) {
 			VALUES ('$question','$op1','$op2','$op3','$op4','$correctAns','$tags','".$_POST['quizDate']."','Q')";
 //echo $sql;
 	$database->query($sql);
+	
+	$q1 = "Select user_id from login";
+	$users=$database->query($q1);
+	
+	$q2 = "select question_id from questions where type = 'Q' order by question_id desc LIMIT 1";
+	$question =$database->fetch_array($database->query($q2));
+	$i=0;
+	while($row = mysql_fetch_array($users)){
+		$sql = "Insert into student_questions (user_id,question_id,answer) Values ('$row[user_id]','$question[0]','-1')";
+		$database->query($sql);
+		$i++;
+		}
+	
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
