@@ -7,8 +7,15 @@ class MyFunction {
 	
 	public function json_convert($q) {
 
-		
+		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
 		//$q = "select lower(tags) as tags from questions";
+		
+		//----- QUERY FOR TAGS OF ALL CORRECT ANSWERS OF LOGGED IN STUDENT------------------
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer"
+		
+		//----- QUERY FOR TAGS OF ALL IN-CORRECT ANSWERS OF LOGGED IN STUDENT---------------
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer"
+		
 		//$result = $database->query($q);
 		$result = mysql_query($q);
 		$r = mysql_fetch_array($result);
