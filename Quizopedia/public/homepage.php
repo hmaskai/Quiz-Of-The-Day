@@ -303,9 +303,9 @@
 					else
 						print_r("<tr class='danger clickable-row' data-href='recommendation.php'> \n");
 					}
-					else{
+				else{
 					print_r("<tr class='clickable-row' data-href='recommendation.php'> \n");
-					}
+				}
 				print_r("<td>".$row["date"]."</td>");
 				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
 				if($row["answer"]==$row["correct_answer"]){
