@@ -196,6 +196,36 @@ class MyFunction {
 
 		return $json_d;
 	}
+
+	public function csv_correct_incorrect_unattempted(){
+		
+		//$result = mysql_query($q);
+		//$r = mysql_fetch_array($result);
+
+		$str = "Question ID,Correct,Incorrect,Unattempted";
+		
+		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		
+		$incorrect = "select q.question_id, count(s.question_id) incorrect from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer != q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		
+		$unattempted = "select q.question_id, count(s.question_id) unattempted from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = -1 GROUP BY q.question_id";
+		
+		$correct_count = mysql_query($correct);
+		$incorrect_count = mysql_query($incorrect);
+		$unattempted_count = mysql_query($unattempted);
+		
+		//$cc = mysql_fetch_assoc($correct_count);
+		//$ic = mysql_fetch_assoc($incorrect_count);
+		//$uc = mysql_fetch_assoc($unattempted_count);
+		
+		//$my_arary = array();
+		while($row_c = mysql_fetch_array($correct_count)){
+			$row_in = mysql_fetch_array($incorrect_count);
+			$row_un = mysql_fetch_array($unattempted_count);
+			$str = $str.$row_c["question_id"].','.$row_c["correct"].','.$row_in["incorrect"].','.$row_un["unattempted"].'\n';
+		}
+		return $str;
+	}
 }
 	$functions = new MyFunction();
 ?>
