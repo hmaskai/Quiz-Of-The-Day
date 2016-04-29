@@ -14,25 +14,7 @@
   <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
    </style>
-	<script>
-	jQuery(document).ready(function($) {
-		$(".clickable-row").click(function() {
-//			var value=$(this).find('td:first').html();
-//			   alert(value);
-			var loc=$(this).data("href");
-			var data = {
-				str : "testString"
-			};
-		$.post('recommendation.php', data, function(response) {
-            window.document.location = loc;
-        });
-		
-		
-		});
-	});
-	
 
-	</script>
 </head>
 <body>
 <?php 
@@ -318,7 +300,7 @@
 					else
 						print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
 				}
-				print_r('<td><form action="recommendation.php" method="post"><input type="hidden" value='.$row["question_id"].'><input type="submit" class="btn btn-success" value="Recommend"/></form></td>');
+				print_r('<td><form action="recommendation.php" method="post"><input type="hidden" name="question_id" value='.$row["question_id"].'><input type="submit" class="btn btn-success" value="Recommend"/></form></td>');
 				//print_r('');
 				print_r("</tr> \n");
 			}	
