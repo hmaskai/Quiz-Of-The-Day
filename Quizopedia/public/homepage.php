@@ -297,7 +297,7 @@
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{
-				if($row["answer"]!=$row["correct_answer"]){
+				/* if($row["answer"]!=$row["correct_answer"]){
 					if($row["answer"]==-1)
 						print_r("<tr class='info clickable-row' data-href='recommendation.php'> \n");
 					else
@@ -305,7 +305,8 @@
 					}
 				else{
 					print_r("<tr class='clickable-row' data-href='recommendation.php'> \n");
-				}
+				} */
+				print_r("<tr>");
 				print_r("<td>".$row["date"]."</td>");
 				print_r("<td>Quiz ".$row["question_id"]."</td>\n");
 				if($row["answer"]==$row["correct_answer"]){
@@ -317,7 +318,9 @@
 					else
 						print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
 				}
-				print_r("<tr> \n");
+				print_r('<td><form action="recommendation.php" method="post"><input type="hidden" value='.$row["question_id"].'><input type="submit" class="btn btn-success" value="Recommend"/></form></td>');
+				//print_r('');
+				print_r("</tr> \n");
 			}	
 		?>
 		</tbody>
