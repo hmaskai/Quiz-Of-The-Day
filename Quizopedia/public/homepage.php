@@ -16,6 +16,10 @@
   <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
    </style>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 </head>
 <body>
 <?php 
@@ -231,8 +235,18 @@
 		</script>	  
 	   <?php
 		 include_once("../includes/functions.php");
+<<<<<<< HEAD
 		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
 		 
+=======
+<<<<<<< HEAD
+		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions where type = 'Q'");
+		 echo "Hi I am here";
+=======
+		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
+		 
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		 ?>
 		 
 	<div>
@@ -273,7 +287,11 @@
 	 <div>
 	 <div id="topPerformers" style="font-size:20px;width:40%;float:left;">
 	 
+<<<<<<< HEAD
 	 <?php  $q= "select l.user_id, CONCAT(l.fname, ' ', l.lname) as name, round(count(*)*100/(select COUNT(*) from questions),2) accuracy from login l left outer JOIN student_questions s on l.user_id = s.user_id left outer join questions q on s.question_id = q.question_id and s.answer = q.correct_answer GROUP BY s.user_id, l.fname, l.lname ORDER BY accuracy DESC limit 10";
+=======
+	 <?php  $q= "select l.user_id, CONCAT(l.fname, ' ', l.lname) as name, round(count(*)*100/(select COUNT(*) from questions),2) accuracy from login l left outer JOIN student_questions s on l.user_id = s.user_id left outer join questions q on s.question_id = q.question_id and s.answer = q.correct_answer and q.type = 'Q' GROUP BY s.user_id, l.fname, l.lname ORDER BY accuracy DESC limit 10";
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 	 
 	 $toppers = $database->query($q);
 	  echo "<table class='table'>";
@@ -326,7 +344,7 @@
 		</thead>
 		<tbody>
 		<?php
-		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s  ON s.question_id=q.question_id where q.type='Q' and s.user_id=".$session->user_id." Order by q.date desc";
+		  $q="select s.answer, s.user_id, q.correct_answer, q.question_id, q.date from questions q LEFT JOIN student_questions s ON s.question_id=q.question_id where q.type='Q' and s.user_id=".$session->user_id." Order by q.date desc";
 		  $student_answer = $database->query($q);
 		  while ($row = mysql_fetch_assoc($student_answer))
 			{

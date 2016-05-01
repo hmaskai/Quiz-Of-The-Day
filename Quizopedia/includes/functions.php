@@ -2,17 +2,15 @@
 class MyFunction {
 	//public $json_d;
 	
-	
-	
 	public function json_convert($q) {
 		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
 		//$q = "select lower(tags) as tags from questions";
 		
 		//----- QUERY FOR TAGS OF ALL CORRECT ANSWERS OF LOGGED IN STUDENT------------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'"
 		
 		//----- QUERY FOR TAGS OF ALL IN-CORRECT ANSWERS OF LOGGED IN STUDENT---------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer and q.type = 'Q'"
 		
 		//$result = $database->query($q);
 		$result = mysql_query($q);
@@ -188,13 +186,17 @@ class MyFunction {
 		
 		//$result = mysql_query($q);
 		//$r = mysql_fetch_array($result);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		$str = "'QuestionID,Correct,Incorrect,Unattempted\\n";
 		
-		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 and q.type = 'Q' GROUP BY q.question_id";
 		
-		$incorrect = "select q.question_id, count(s.question_id) incorrect from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer != q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		$incorrect = "select q.question_id, count(s.question_id) incorrect from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer != q.correct_answer and s.answer != -1 and q.type = 'Q' GROUP BY q.question_id";
 		
-		$unattempted = "select q.question_id, count(s.question_id) unattempted from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = -1 GROUP BY q.question_id";
+		$unattempted = "select q.question_id, count(s.question_id) unattempted from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = -1 and q.type = 'Q' GROUP BY q.question_id";
 		
 		$correct_count = mysql_query($correct);
 		$incorrect_count = mysql_query($incorrect);
@@ -216,6 +218,7 @@ class MyFunction {
 	
 	public function student_accuracy(){
 		
+<<<<<<< HEAD
 		error_reporting(0);
 		
 		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
@@ -231,15 +234,48 @@ class MyFunction {
 		$result = mysql_query("select lower(tags) as tags from questions");
 		$r = mysql_fetch_array($result);
 		$str = "";
+=======
+<<<<<<< HEAD
+		//error_reporting(0);
+=======
+		error_reporting(0);
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
+		
+		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
+		//$q = "select lower(tags) as tags from questions where q.type = 'Q'";
+		
+		//----- QUERY FOR TAGS OF ALL CORRECT ANSWERS OF LOGGED IN STUDENT------------------
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'"
+		
+		//----- QUERY FOR TAGS OF ALL IN-CORRECT ANSWERS OF LOGGED IN STUDENT---------------
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer and q.type = 'Q'"
+		
+		//$result = $database->query($q);
+		$result = mysql_query("select lower(tags) as tags from questions where type = 'Q'");
+		$r = mysql_fetch_array($result);
+
+		$str = "";
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		while($row = mysql_fetch_array($result)){
 			$str = $str.",".$row["tags"];
 		}
 		$str = str_replace(", ", ",", $str);
 		$str = substr($str, 1);
+<<<<<<< HEAD
 		$str = str_replace(",", ", ", $str);
 		//echo $str."</br>";
 		// formatting string complete
 		// code to find the occurance of each concept in the string
+=======
+
+		$str = str_replace(",", ", ", $str);
+		//echo $str."</br>";
+		// formatting string complete
+
+		// code to find the occurance of each concept in the string
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		$Class = "Class";
 		$Object = "Object";
 		$Variables = "Variables";
@@ -260,6 +296,11 @@ class MyFunction {
 		$Decision_Types = "Decision Types";
 		$Interface = "Interface";
 		$Inheritance = "Inheritance";
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		$Class_count=substr_count(strtolower($str),strtolower($Class));
 		$Object_count=substr_count(strtolower($str),strtolower($Object));
 		$Variables_count=substr_count(strtolower($str),strtolower($Variables));
@@ -285,14 +326,25 @@ class MyFunction {
 		$final = '[';
 		
 		while($u = mysql_fetch_array($users)){
+<<<<<<< HEAD
 			$user_correct = mysql_query("select lower(q.tags) tags from questions q, student_questions sq where sq.user_id = ".$u['user_id']." and q.question_id = sq.question_id and sq.answer = q.correct_answer");
 			
 			$str = "";
+=======
+			$user_correct = mysql_query("select lower(q.tags) tags from questions q, student_questions sq where sq.user_id = ".$u['user_id']." and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'");
+			
+			$str = "";
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 			while($row = mysql_fetch_array($user_correct)){
 				$str = $str.",".$row["tags"];
 			}
 			$str = str_replace(", ", ",", $str);
 			$str = substr($str, 1);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 			$str = str_replace(",", ", ", $str);
 			//echo $str;
 			//echo "</br>";
@@ -340,7 +392,15 @@ class MyFunction {
 			$final = $final.$Switch_Statement.":".round($Switch_Statement_count!=0 ? (100 * $Class_count_user)/$Switch_Statement_count : 0, 2).", ";
 			$final = $final.$Decision_Types.":".round($Decision_Types_count!=0 ? (100 * $Class_count_user)/$Decision_Types_count : 0, 2).", ";
 			$final = $final.$Interface.":".round($Interface_count!=0 ? (100 * $Class_count_user)/$Interface_count : 0, 2).", ";
+<<<<<<< HEAD
 			$final = $final.$Inheritance.":".round($Inheritance_count!=0 ? (100 * $Class_count_user)/$Inheritance_count : 0, 2)."}},";
+=======
+<<<<<<< HEAD
+			$final = $final.$Inheritance.":".round($Inheritance_count!=0 ? (100 * $Class_count_user)/$Inheritance_count : 0, 2)."}},</br>";
+=======
+			$final = $final.$Inheritance.":".round($Inheritance_count!=0 ? (100 * $Class_count_user)/$Inheritance_count : 0, 2)."}},";
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 		}
 		$final .= ']';
 		
@@ -355,9 +415,22 @@ class MyFunction {
 		$final = str_replace("Switch Statement", "Switch_Statement", $final);
 		$final = str_replace("Decision Types", "Decision_Types", $final);
 		
+<<<<<<< HEAD
 		return $final;
 		
 	}
+=======
+<<<<<<< HEAD
+		echo $final;
+		
+	}
+	
+=======
+		return $final;
+		
+	}
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
+>>>>>>> 02409fdc724eb069a2075873d6c89630a854646e
 }
 	$functions = new MyFunction();
 ?>
