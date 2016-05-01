@@ -9,10 +9,10 @@ class MyFunction {
 		//$q = "select lower(tags) as tags from questions";
 		
 		//----- QUERY FOR TAGS OF ALL CORRECT ANSWERS OF LOGGED IN STUDENT------------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'"
 		
 		//----- QUERY FOR TAGS OF ALL IN-CORRECT ANSWERS OF LOGGED IN STUDENT---------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer and q.type = 'Q'"
 		
 		//$result = $database->query($q);
 		$result = mysql_query($q);
@@ -202,11 +202,11 @@ class MyFunction {
 
 		$str = "'QuestionID,Correct,Incorrect,Unattempted\\n";
 		
-		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 and q.type = 'Q' GROUP BY q.question_id";
 		
-		$incorrect = "select q.question_id, count(s.question_id) incorrect from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer != q.correct_answer and s.answer != -1 GROUP BY q.question_id";
+		$incorrect = "select q.question_id, count(s.question_id) incorrect from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer != q.correct_answer and s.answer != -1 and q.type = 'Q' GROUP BY q.question_id";
 		
-		$unattempted = "select q.question_id, count(s.question_id) unattempted from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = -1 GROUP BY q.question_id";
+		$unattempted = "select q.question_id, count(s.question_id) unattempted from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = -1 and q.type = 'Q' GROUP BY q.question_id";
 		
 		$correct_count = mysql_query($correct);
 		$incorrect_count = mysql_query($incorrect);
@@ -235,16 +235,16 @@ class MyFunction {
 >>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
 		
 		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
-		//$q = "select lower(tags) as tags from questions";
+		//$q = "select lower(tags) as tags from questions where q.type = 'Q'";
 		
 		//----- QUERY FOR TAGS OF ALL CORRECT ANSWERS OF LOGGED IN STUDENT------------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'"
 		
 		//----- QUERY FOR TAGS OF ALL IN-CORRECT ANSWERS OF LOGGED IN STUDENT---------------
-		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer"
+		//$q = "select lower(q.tags) from questions q, student_questions sq where sq.user_id = $session->user_id and q.question_id = sq.question_id and sq.answer != q.correct_answer and q.type = 'Q'"
 		
 		//$result = $database->query($q);
-		$result = mysql_query("select lower(tags) as tags from questions");
+		$result = mysql_query("select lower(tags) as tags from questions where type = 'Q'");
 		$r = mysql_fetch_array($result);
 
 		$str = "";
@@ -308,7 +308,7 @@ class MyFunction {
 		$final = '[';
 		
 		while($u = mysql_fetch_array($users)){
-			$user_correct = mysql_query("select lower(q.tags) tags from questions q, student_questions sq where sq.user_id = ".$u['user_id']." and q.question_id = sq.question_id and sq.answer = q.correct_answer");
+			$user_correct = mysql_query("select lower(q.tags) tags from questions q, student_questions sq where sq.user_id = ".$u['user_id']." and q.question_id = sq.question_id and sq.answer = q.correct_answer and q.type = 'Q'");
 			
 			$str = "";
 
