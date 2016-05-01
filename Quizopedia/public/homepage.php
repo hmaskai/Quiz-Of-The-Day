@@ -265,7 +265,7 @@
 		</script>	  
 	   <?php
 		 include_once("../includes/functions.php");
-		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
+		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions where type = 'Q'");
 		 echo "Hi I am here";
 		 ?>
 	<div id="sunBurst" style="clear:left;"></div>
