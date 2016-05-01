@@ -200,7 +200,7 @@ class MyFunction {
 		//$result = mysql_query($q);
 		//$r = mysql_fetch_array($result);
 
-		$str = "Question ID,Correct,Incorrect,Unattempted";
+		$str = "'QuestionID,Correct,Incorrect,Unattempted\\n";
 		
 		$correct = "select q.question_id, count(s.question_id) correct from questions q left outer join student_questions s on q.question_id = s.question_id and s.answer = q.correct_answer and s.answer != -1 GROUP BY q.question_id";
 		
@@ -220,14 +220,19 @@ class MyFunction {
 		while($row_c = mysql_fetch_array($correct_count)){
 			$row_in = mysql_fetch_array($incorrect_count);
 			$row_un = mysql_fetch_array($unattempted_count);
-			$str = $str.$row_c["question_id"].','.$row_c["correct"].','.$row_in["incorrect"].','.$row_un["unattempted"].'\n';
+			$str = $str."Quiz ".$row_c["question_id"].','.$row_c["correct"].','.$row_in["incorrect"].','.$row_un["unattempted"].'\n';
 		}
+		$str.="'";
 		return $str;
 	}
 	
 	public function student_accuracy(){
 		
+<<<<<<< HEAD
 		//error_reporting(0);
+=======
+		error_reporting(0);
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
 		
 		//----- QUERY FOR TAGS OF ALL QUESTIONS [TO FIND THE COUNT OF ALL QUESTIONS]--------
 		//$q = "select lower(tags) as tags from questions";
@@ -360,7 +365,11 @@ class MyFunction {
 			$final = $final.$Switch_Statement.":".round($Switch_Statement_count!=0 ? (100 * $Class_count_user)/$Switch_Statement_count : 0, 2).", ";
 			$final = $final.$Decision_Types.":".round($Decision_Types_count!=0 ? (100 * $Class_count_user)/$Decision_Types_count : 0, 2).", ";
 			$final = $final.$Interface.":".round($Interface_count!=0 ? (100 * $Class_count_user)/$Interface_count : 0, 2).", ";
+<<<<<<< HEAD
 			$final = $final.$Inheritance.":".round($Inheritance_count!=0 ? (100 * $Class_count_user)/$Inheritance_count : 0, 2)."}},</br>";
+=======
+			$final = $final.$Inheritance.":".round($Inheritance_count!=0 ? (100 * $Class_count_user)/$Inheritance_count : 0, 2)."}},";
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
 		}
 		$final .= ']';
 		
@@ -375,10 +384,16 @@ class MyFunction {
 		$final = str_replace("Switch Statement", "Switch_Statement", $final);
 		$final = str_replace("Decision Types", "Decision_Types", $final);
 		
+<<<<<<< HEAD
 		echo $final;
 		
 	}
 	
+=======
+		return $final;
+		
+	}
+>>>>>>> 98218067f5f62bdde967ad9d330c5b695e21aa6a
 }
 	$functions = new MyFunction();
 ?>
