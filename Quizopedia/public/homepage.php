@@ -11,28 +11,11 @@
   <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
   <script src="js/liquidFillGauge.js" language="JavaScript"></script>
   <script src="js/sunBurst.js" language="JavaScript"></script>
+  <script src="js/groupedBarChart.js" language="JavaScript"></script>
+   <script src="js/dashboard.js" language="JavaScript"></script>
   <style>
         .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
    </style>
-	<script>
-	jQuery(document).ready(function($) {
-		$(".clickable-row").click(function() {
-//			var value=$(this).find('td:first').html();
-//			   alert(value);
-			var loc=$(this).data("href");
-			var data = {
-				str : "testString"
-			};
-		$.post('recommendation.php', data, function(response) {
-            window.document.location = loc;
-        });
-		
-		
-		});
-	});
-	
-
-	</script>
 </head>
 <body>
 <?php 
@@ -52,7 +35,6 @@
     header('Location: login.php');
     exit();
 }
-
 	$q="select * from login where user_id =".$session->user_id;
 	$pretest = $database->fetch_array($database->query($q));
 	
@@ -74,7 +56,6 @@
 		<div class="navbar-header">
 		  <a class="navbar-brand" href="#">Quizopedia</a>
 		</div>
-
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="myNavbar">
 		  
@@ -87,10 +68,7 @@
 	</nav>
 	
 	
-
 <div class="container">
-
-
   
   
   <div style="float:right;">
@@ -105,6 +83,7 @@
     <li><a data-toggle="pill" href="#menu1">Progress</a></li>
     <li><a data-toggle="pill" href="#menu2">Class Performance</a></li>
     <li><a data-toggle="pill" href="#menu3">Recommendations</a></li>
+	<li><a data-toggle="pill" href="#menu4">Top Reads</a></li>
   </ul>
   </div>
   
@@ -120,11 +99,9 @@
 					<?php 
 					$q = "select * from questions where type = 'Q' order by question_id desc LIMIT 1";
 					$result = $database->query($q);
-
 					
 					$question = $database->fetch_array($result);
 					$GLOBALS['q'] = $question;
-
 					$q_validate = "select * from student_questions where user_id = '".$session->user_id."' and question_id = '".$question["question_id"]."' and answer<>-1";
 					$result_validate = $database->query($q_validate);
 					echo $result_validate["answer"];
@@ -144,17 +121,14 @@
 						<input type="radio" name="radio" id="radio1" class="radio" value="1"/>
 						<label for="radio1"><?php echo $GLOBALS["q"]["option_1"];?></label>
 						</div>
-
 						<div class="radionew">
 						<input type="radio" name="radio" id="radio2" class="radio" value="2"/>
 						<label for="radio2"><?php echo $GLOBALS["q"]["option_2"];?></label>
 						</div>
-
 						<div class="radionew">	
 						<input type="radio" name="radio" id="radio3" class="radio" value="3"/>
 						<label for="radio3"><?php echo $GLOBALS["q"]["option_3"];?></label>
 						</div>
-
 						<div class="radionew">	
 						<input type="radio" name="radio" id="radio4" class="radio" value="4"/>
 						<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
@@ -167,27 +141,20 @@
 					}
 					else{
 						?>
-						<h2 class="question"><span class="glyphicon glyphicon-thumbs-up"></span> You have finished today's challenge</h2>
+						<h2 class="question"><span class="glyphicon glyphicon-thumbs-up" ></span> You have finished today's challenge</h2>
 						<?php echo "<h2 class='answered_question'>Quiz #".$GLOBALS['q']["question_id"]."<br/>".$GLOBALS['q']["question_text"]."</h2>";?>
-						<div style="margin-left:30%">
-							<input type="hidden" name="question_id" value="<?php echo $GLOBALS["q"]["question_id"];?>" />
+						<div style="margin-left:45%">
+							
 							<div class="radionew">
-							<input type="radio" name="radio" id="radio1" class="radio" value="1" disabled>
 							<label for="radio1" ><?php echo $GLOBALS["q"]["option_1"];?></label>
 							</div>
-
 							<div class="radionew">
-							<input type="radio" name="radio" id="radio2" class="radio" value="2" disabled>
 							<label for="radio2"><?php echo $GLOBALS["q"]["option_2"];?></label>
 							</div>
-
 							<div class="radionew">	
-							<input type="radio" name="radio" id="radio3" class="radio" value="3" disabled>
 							<label for="radio3"><?php echo $GLOBALS["q"]["option_3"];?></label>
 							</div>
-
 							<div class="radionew">	
-							<input type="radio" name="radio" id="radio4" class="radio" value="4" disabled>
 							<label for="radio4"><?php echo $GLOBALS["q"]["option_4"];?></label>
 							</div>
 							
@@ -197,13 +164,13 @@
 					?>
 				</div>	  
 			</div>
-
     </div>
     <div id="menu1" class="tab-pane fade" style="width:100%;">
 		
-      <h3>Progress</h3>
-      <p>Status of attempted quiz</p> 
-	  <div>
+      
+     <br/><br/>
+	 <h4 style="text-align:center;"><b>Performance measures</b></h4>
+	  <div style="margin-left:25%;">
 		<div style= "float:left; margin:20px">
 		  <svg id="fillgauge1" width="150" height="150" ></svg>
 		  <p style="text-align: center;">Total Quizes</p>
@@ -226,7 +193,6 @@
 		$correct_answers = $database->fetch_array($database->query($q));
 		$_GLOBAL["correct answers"] = $correct_answers[0];
 		?>
-
 		<script language="JavaScript">
     
 		var config1 = liquidFillGaugeDefaultSettings();
@@ -266,9 +232,14 @@
 	   <?php
 		 include_once("../includes/functions.php");
 		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
-		 echo "Hi I am here";
+		 
 		 ?>
+		 
+	<div>
+	
+	<h4 style="clear:left;margin-left:13%"><b>Topic-wise Performance</b></h4>
 	<div id="sunBurst" style="clear:left;"></div>
+	</div>
 	 <script>
 	 
 	 
@@ -277,11 +248,73 @@
 	 </script>
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Class Performance</h3>
-      <p>Students can compare their performance with others.</p>
+      
+      <br/>
+	   <?php
+		 include_once("../includes/functions.php");
+		 $_GLOBAL['correct_incorrect']=$functions->csv_correct_incorrect_unattempted();
+		 $q="select count(user_id) as count from login" ;
+		 $_GLOBAL['numberOfStudents'] = $database->fetch_array($database->query($q));
+		 ?>
+	<div style="width:50%;text-align:center;float:left;">	 
+	<text style="font-size:20px;"><b>Class Performance(Quiz-wise)</b></text>
+	</div>
+	<div style="width:50%;text-align:center;float:left;">	 
+	<text style="font-size:20px;"><b>Leaderboard</b></text>
+	</div>
+	<div id="groupedBarChart" style="clear:left; float:left"></div>
+	
+	 <script>
+	 loadGroupedBarChart(<?php echo $_GLOBAL['correct_incorrect'];echo ","; echo $_GLOBAL['numberOfStudents']['count'];?>);
+	 </script>
+	 
+	 
+	 
+	 <div>
+	 <div id="topPerformers" style="font-size:20px;width:40%;float:left;">
+	 
+	 <?php  $q= "select l.user_id, CONCAT(l.fname, ' ', l.lname) as name, round(count(*)*100/(select COUNT(*) from questions),2) accuracy from login l left outer JOIN student_questions s on l.user_id = s.user_id left outer join questions q on s.question_id = q.question_id and s.answer = q.correct_answer GROUP BY s.user_id, l.fname, l.lname ORDER BY accuracy DESC limit 10";
+	 
+	 $toppers = $database->query($q);
+	  echo "<table class='table'>";
+      echo "<thead>";
+      echo "<tr>";
+      echo "<th>Student</th>";
+      echo "<th>Score</th>";
+      echo "</tr>";
+      echo "</thead>";
+      echo "<tbody>";
+      
+      
+     
+	 while($row=mysql_fetch_array($toppers)){
+		 echo "<tr>";
+         echo "<td>". $row["name"]."</td>";
+         echo "<td>". $row["accuracy"]."</td>";
+         echo "</tr>";
+		 
+	 }
+	  echo "</tbody>";
+      echo "</table>";
+	 ?>
+	 
+	 </div>
+	 </div>
+	 <?php include_once("../includes/functions.php");?>
+	 <div id="dashboard" style="clear:left; float:left"></div>
+	 <script>
+	 dashboard('#dashboard',<?php echo $functions->student_accuracy();?>);
+	 </script>
+	 
+	 
     </div>
+    
+	
+	
+	
+	
     <div id="menu3" class="tab-pane fade">
-      <h3>Recommendations</h3>
+      
       <p>Click on individual rows below to view the details.</p>
 	  <table id="table" class="table table-hover">
 		<thead>
@@ -318,13 +351,21 @@
 					else
 						print_r("<td><span class='glyphicon glyphicon-remove'></span></td>\n");
 				}
-				print_r('<td><form action="recommendation.php" method="post"><input type="hidden" value='.$row["question_id"].'><input type="submit" class="btn btn-success" value="Recommend"/></form></td>');
+				print_r('<td><form action="recommendation.php" method="post"><input type="hidden" name="question_id" value='.$row["question_id"].'><input type="submit" class="btn btn-success" value="Recommend"/></form></td>');
 				//print_r('');
 				print_r("</tr> \n");
 			}	
 		?>
 		</tbody>
 	  </table>
+    </div>
+	
+	
+	
+	<div id="menu4" class="tab-pane fade">
+      
+      <p>Recommendations based on your strengths and weaknesses</p>
+	  
     </div>
   </div>
 </div>
