@@ -1,4 +1,4 @@
-function loadGroupedBarChart(data, noOfStudents){
+function loadStackeddBarChart(data, noOfStudents){
 	
 	
 	

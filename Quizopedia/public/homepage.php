@@ -182,9 +182,10 @@
     </div>
     <div id="menu1" class="tab-pane fade" style="width:100%;">
 		
-      <h3>Progress</h3>
-      <p>Status of attempted quiz</p> 
-	  <div>
+      
+     <br/><br/>
+	 <h4 style="text-align:center;"><b>Performance measures</b></h4>
+	  <div style="margin-left:25%;">
 		<div style= "float:left; margin:20px">
 		  <svg id="fillgauge1" width="150" height="150" ></svg>
 		  <p style="text-align: center;">Total Quizes</p>
@@ -249,7 +250,12 @@
 		 $_GLOBAL['sunBurstJson']=$functions->json_convert("select lower(tags) as tags from questions");
 		 
 		 ?>
+		 
+	<div>
+	
+	<h4 style="clear:left;margin-left:13%"><b>Topic-wise Performance</b></h4>
 	<div id="sunBurst" style="clear:left;"></div>
+	</div>
 	 <script>
 	 
 	 
@@ -258,30 +264,57 @@
 	 </script>
     </div>
     <div id="menu2" class="tab-pane fade">
-      <h3>Class Performance</h3>
-      <p>Students can compare their performance with others.</p>
+      
+      <br/>
 	   <?php
 		 include_once("../includes/functions.php");
 		 $_GLOBAL['correct_incorrect']=$functions->csv_correct_incorrect_unattempted();
 		 $q="select count(user_id) as count from login" ;
 		 $_GLOBAL['numberOfStudents'] = $database->fetch_array($database->query($q));
 		 ?>
+	<div style="width:50%;text-align:center;float:left;">	 
+	<text style="font-size:20px;"><b>Class Performance(Quiz-wise)</b></text>
+	</div>
+	<div style="width:50%;text-align:center;float:left;">	 
+	<text style="font-size:20px;"><b>Leaderboard</b></text>
+	</div>
 	<div id="groupedBarChart" style="clear:left; float:left"></div>
+	
 	 <script>
 	 loadGroupedBarChart(<?php echo $_GLOBAL['correct_incorrect'];echo ","; echo $_GLOBAL['numberOfStudents']['count'];?>);
 	 </script>
 	 
-	 <div id="topPerformers" style="float:left; margin-left:5%;width:40%;height:30%;text-align:center;">
-	 <h4>LeaderBoard</h4>
-	 <?php  $q= "select l.user_id, CONCAT(l.fname, ' ', l.lname) as name, round(count(*)*100/(select COUNT(*) from questions),2) accuracy from login l left outer JOIN student_questions s on l.user_id = s.user_id left outer join questions q on s.question_id = q.question_id and s.answer = q.correct_answer GROUP BY s.user_id, l.fname, l.lname ORDER BY accuracy DESC limit 3";
+	 
+	 
+	 <div>
+	 <div id="topPerformers" style="font-size:20px;width:40%;float:left;">
+	 
+	 <?php  $q= "select l.user_id, CONCAT(l.fname, ' ', l.lname) as name, round(count(*)*100/(select COUNT(*) from questions),2) accuracy from login l left outer JOIN student_questions s on l.user_id = s.user_id left outer join questions q on s.question_id = q.question_id and s.answer = q.correct_answer GROUP BY s.user_id, l.fname, l.lname ORDER BY accuracy DESC limit 10";
 	 
 	 $toppers = $database->query($q);
-	 
+	  echo "<table class='table'>";
+      echo "<thead>";
+      echo "<tr>";
+      echo "<th>Student</th>";
+      echo "<th>Score</th>";
+      echo "</tr>";
+      echo "</thead>";
+      echo "<tbody>";
+      
+      
+     
 	 while($row=mysql_fetch_array($toppers)){
-		 echo $row["name"];
-		 echo "<br />";
+		 echo "<tr>";
+         echo "<td>". $row["name"]."</td>";
+         echo "<td>". $row["accuracy"]."</td>";
+         echo "</tr>";
+		 
 	 }
+	  echo "</tbody>";
+      echo "</table>";
 	 ?>
+	 
+	 </div>
 	 </div>
 	 <?php include_once("../includes/functions.php");?>
 	 <div id="dashboard" style="clear:left; float:left"></div>
@@ -297,7 +330,7 @@
 	
 	
     <div id="menu3" class="tab-pane fade">
-      <h3>Recommendations</h3>
+      
       <p>Click on individual rows below to view the details.</p>
 	  <table id="table" class="table table-hover">
 		<thead>
@@ -346,7 +379,7 @@
 	
 	
 	<div id="menu4" class="tab-pane fade">
-      <h3>Top Reads</h3>
+      
       <p>Recommendations based on your strengths and weaknesses</p>
 	  
     </div>

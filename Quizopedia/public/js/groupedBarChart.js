@@ -6,7 +6,7 @@ function loadGroupedBarChart(data, noOfStudents){
 	var myData = d3.csv.parse(myDataString);
 	
 	var margin = {top: 20, right: 20, bottom: 50, left: 40},
-	width = 570 - margin.left - margin.right,
+	width = (screen.width/3) - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
 	var x0 = d3.scale.ordinal()
@@ -55,7 +55,7 @@ function loadGroupedBarChart(data, noOfStudents){
 		  .call(xAxis)
 		  .selectAll("text")
 			.style("text-anchor", "end")
-			.style("font-size","85%")
+			.style("font-size","105%")
 			.attr("dx", "-.8em")
 			.attr("dy", ".15em")
 			.attr("transform", "rotate(-45)" );
@@ -84,7 +84,7 @@ function loadGroupedBarChart(data, noOfStudents){
 		  .attr("y", function(d) { return y(d.value); })
 		  .attr("height", function(d) { return height - y(d.value); })
 		  .style("fill", function(d) { return color(d.name); });
-
+/*
 	  var legend = svg.selectAll(".legend")
 		  .data(ageNames.slice().reverse())
 		.enter().append("g")
@@ -103,6 +103,6 @@ function loadGroupedBarChart(data, noOfStudents){
 		  .attr("dy", ".35em")
 		  .style("text-anchor", "end")
 		  .text(function(d) { return d; });
-
+*/
 	
 }
